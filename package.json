@@ -18,9 +18,13 @@
   },
   "homepage": "https://github.com/vinhnguyen93-developer/blog-api#readme",
   "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "mongodb": "^3.5.9",
-    "mongoose": "^5.9.25"
+    "mongoose": "^5.9.25",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.2"
   },
   "devDependencies": {
     "nodemon": "^2.0.4"
