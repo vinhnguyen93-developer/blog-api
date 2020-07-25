@@ -1,3 +1,5 @@
+const jwt = require("jsonwebtoken");
+const jwtCofig = (require("../config").app || {}).jwt;
 const authService = {};
 
 /**
@@ -16,6 +18,17 @@ authService.authentication = function ({ byPass = false, authKey = "authorizatio
 
         }
     }
+}
+
+authService.genToken = (payload) => {
+    return new Promise((resolve, reject) => {
+        jwt.sign(payload, jwtCofig.secret, jwtCofig.options || {} ,(err, token) => {
+            if (err) {
+                reject(err);
+            };
+            resolve(token);
+        })
+    });
 }
 
 module.exports = authService;

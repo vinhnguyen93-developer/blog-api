@@ -8,7 +8,7 @@ const serverHelper = {};
  * @param {{ end: boolean=false  }} options
  * @returns {(req: Request, res: Response, next: (error: Error) => void) => void}
  */
-serverHelper.ctrlWrapper = (handler, paramsHandler, options) => {
+serverHelper.ctrlWrapper = (handler, paramsHandler, options = {}) => {
     return async (req, res, next) => {
         try {
             var params = [];

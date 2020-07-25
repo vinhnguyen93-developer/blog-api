@@ -1,9 +1,12 @@
 module.exports = {
     app: {
         port: 8899,
-        morganEnable: true,
-        corsMode: "all",
-        authHeaderKey: "authorization"
+        morganEnable: true, // log
+        corsMode: "all", // cors
+        authHeaderKey: "authorization",
+        jwt: {
+            secret: "vcteam2020",
+        }
     },
     api: {
         pagination: {

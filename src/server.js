@@ -1,5 +1,6 @@
 const express = require("express");
 const Routes = require("./routes");
+const Models = require("./models");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const cors = require("cors");
@@ -62,6 +63,7 @@ const start = (appConfig, apiConfig) => {
     secureAPIParam(apiServer, apiConfig)
 
     Routes.init(apiServer, "/api/v1", { byPassAuth: appConfig.bypassAuth, authHeaderKey: appConfig.authHeaderKey });
+    Models.init();
 
     apiServer.listen(port, () => {
         console.log("\x1b[36m%s\x1b[0m", `[Server]`, "\x1b[0m", `Running on port ${port}`);
