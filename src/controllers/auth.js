@@ -16,7 +16,9 @@ Controller.login = async (email, password) => {
     }
 
     const token = await genToken({ _id: user._id.toString() });
+    const { password, ...payload } = user;
     return {
+        ...payload,
         token: token
     }
 };
