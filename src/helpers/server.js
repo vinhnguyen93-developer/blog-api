@@ -5,22 +5,42 @@ const serverHelper = {};
 /**
  * @param {(...params: Array.<any>) => Promise<any> | any} handler
  * @param {(req: Request, res: Response, next: (error: Error) => void) => Array.<any>} paramsHandler
- * @param {{ end: boolean=false  }} options
+ * @param {{ end: boolean=false, requestEndWithoutData: boolean, transformBeforeEnd: (req: Request, value: any) => any, pipe: { key: string, transform: (value: any) => any, allowNull: boolean }  }} options
  * @returns {(req: Request, res: Response, next: (error: Error) => void) => void}
  */
-serverHelper.ctrlWrapper = (handler, paramsHandler, options = {}) => {
+serverHelper.ctrlWrapper = (handler, paramsHandler, options) => {
     return async (req, res, next) => {
         try {
             var params = [];
             if (handler) {
                 params = await handler(req, res, next) || []
             }
-            
+            const { end, pipe, requestEndWithoutData, transformBeforeEnd } = options;
+
             if (res.headersSent) return;
             var result = await paramsHandler(...params);
 
-            if (options.end) {
-                serverHelper.successResponse(res, result);
+            if (end) {
+                var responseData = result;
+                if (typeof responseData == "object") {
+                    responseData = Array.isArray(responseData) ? [...responseData] : {...responseData }
+                }
+                if (!requestEndWithoutData && transformBeforeEnd) {
+                    responseData = transformBeforeEnd(req, responseData);
+                }
+                serverHelper.successResponse(res, requestEndWithoutData ? undefined : responseData);
+            }
+
+            if (pipe) {
+                const { key, transform, allowNull } = options.pipe;
+                var pipeData = result;
+                if (pipeData || (pipeData == null && allowNull)) {
+                    if (transform) {
+                        pipeData = transform(pipeData);
+                    }
+                    
+                    req[key] = pipeData;
+                }
             }
             
             next();

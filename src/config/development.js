@@ -22,6 +22,7 @@ module.exports = {
                 max: 50
             }
         },
+        preflix: "/api/v1"
     },
     storage: {
         rootPath: "/upload",

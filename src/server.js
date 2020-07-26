@@ -62,7 +62,7 @@ const start = (appConfig, apiConfig) => {
 
     secureAPIParam(apiServer, apiConfig)
 
-    Routes.init(apiServer, "/api/v1", { byPassAuth: appConfig.bypassAuth, authHeaderKey: appConfig.authHeaderKey });
+    Routes.init(apiServer, apiConfig.preflix, { byPassAuth: appConfig.bypassAuth, authHeaderKey: appConfig.authHeaderKey });
     Models.init();
 
     apiServer.listen(port, () => {

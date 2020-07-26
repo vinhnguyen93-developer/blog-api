@@ -25,9 +25,12 @@ mongoHelper.find = async function (modelName, filter, { options = {}, projection
 
 mongoHelper.update = async function (modelName, filter = {}, data, { options = {}, multi = false } = {}) {
     var __modelName__ = modelName.toLowerCase();
-    var handleModel = multi ? "updateMany" : "updateOne";
+    var handleModel = multi ? "updateMany" : "findOneAndUpdate";
 
-    return await model(__modelName__)[handleModel](filter, data, options);
+    const r = await model(__modelName__)[handleModel](filter, data, options);
+    if (r) {
+        return (r.toObject && typeof r.toObject == "function") ? r.toObject() : r;
+    }
 }
 
 mongoHelper.deleteOne = async function (modelName, filter, { options = {}, multi = false } = {}) {
