@@ -17,7 +17,10 @@ mongoHelper.find = async function (modelName, filter, { options = {}, projection
     var __modelName__ = modelName.toLowerCase();
     var handleModel = multi ? "find" : "findOne";
 
-    return await model(__modelName__)[handleModel](filter, projection, options);
+    const r = await model(__modelName__)[handleModel](filter, projection, options);
+    if (r) {
+        return (r.toObject && typeof r.toObject == "function") ? r.toObject() : r;
+    }
 }
 
 mongoHelper.update = async function (modelName, filter = {}, data, { options = {}, multi = false } = {}) {
