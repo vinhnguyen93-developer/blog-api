@@ -8,7 +8,7 @@ const _schema = new Schema({
     },
     imageDesc: {
       type: Types.ObjectId,
-      // required: true
+      required: true
     },
     content: {
       type: String,
@@ -16,7 +16,7 @@ const _schema = new Schema({
     },
     author: {
       type: Types.ObjectId,
-      // required: true
+      required: true
     }
 }, { timestamps: true })
 
