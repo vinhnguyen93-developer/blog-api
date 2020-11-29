@@ -8,7 +8,7 @@ const _schema = new Schema({
     },
     imageDesc: {
       type: Types.ObjectId,
-      required: true
+      required: false
     },
     content: {
       type: String,
