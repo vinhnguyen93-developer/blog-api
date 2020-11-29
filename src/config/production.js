@@ -51,7 +51,7 @@ module.exports = {
     },
     database: {
         mongo: {
-            uri: "mongodb://vcteam2020:vcteam2020gialy17061998@207.148.69.27:27017/?authSource=admin",
+            uri: "mongodb://vcteam:vcteam2020@178.128.49.136:27017/?authSource=admin",
             options: {
                 useNewUrlParser: true, useUnifiedTopology: true,
             }
